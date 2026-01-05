@@ -34,25 +34,32 @@ export class App {
     this.datiForm = { username: '', password: '' };
   }
 
-  // app.ts
-async onSubmit() {
+
+  async onSubmit() {
+    this.messaggioEsito = '';
+    
     try {
-      if (this.isLoginMode) {
-        const res = await this.data.login(this.datiForm);        
-        this.utenteLoggato = res.utente;
-        this.idUtenteLoggato = res.idUtente; 
-        await this.caricaNote();
-      } 
-      // --- CASO REGISTRAZIONE ---
-        const res = await this.data.registraUtente(this.datiForm);
-        this.messaggioEsito = "Registrazione riuscita! Ora puoi fare il login.";
-        this.isLoginMode = true;
-        this.datiForm = { username: '', password: '' };
+        if (this.isLoginMode) {
+            // --- LOGICA LOGIN ---
+            const res = await this.data.login(this.datiForm);        
+            this.utenteLoggato = res.utente;
+            this.idUtenteLoggato = res.idUtente; 
+            this.messaggioEsito = "Login effettuato con successo!";
+            await this.caricaNote();
+        } 
+        else { 
+            // --- LOGICA REGISTRAZIONE (ORA DENTRO ELSE) ---
+            await this.data.registraUtente(this.datiForm);
+            this.messaggioEsito = "Registrazione riuscita! Inserisci di nuovo la password per accedere.";
+            
+            this.isLoginMode = true; 
+            this.datiForm.password = ''; 
+        }
     } catch (error: any) {
         console.error("Errore durante l'operazione:", error);
-        // Mostra l'errore che arriva dal backend (es. "Username già esistente")
-        this.messaggioEsito = error.error?.errore || "Errore di connessione al server";
-        this.cdr.detectChanges();
+        this.messaggioEsito = error.error?.errore || "Errore di comunicazione con il server";
+    } finally {
+        this.cdr.detectChanges(); 
     }
 }
 
