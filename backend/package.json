@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "start": "node server.js",
-  "test": "echo \"No tests yet\"" 
+    "start": "node server.js",
+    "test": "echo \"No tests yet\""
   },
   "keywords": [],
   "author": "",
