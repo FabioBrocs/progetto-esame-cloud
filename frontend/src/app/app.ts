@@ -43,8 +43,17 @@ async onSubmit() {
         this.idUtenteLoggato = res.idUtente; 
         await this.caricaNote();
       } 
-      // ... resto del codice
-    } catch (error) { /* ... */ }
+      // --- CASO REGISTRAZIONE ---
+        const res = await this.data.registraUtente(this.datiForm);
+        this.messaggioEsito = "Registrazione riuscita! Ora puoi fare il login.";
+        this.isLoginMode = true;
+        this.datiForm = { username: '', password: '' };
+    } catch (error: any) {
+        console.error("Errore durante l'operazione:", error);
+        // Mostra l'errore che arriva dal backend (es. "Username già esistente")
+        this.messaggioEsito = error.error?.errore || "Errore di connessione al server";
+        this.cdr.detectChanges();
+    }
 }
 
   async caricaNote() {
