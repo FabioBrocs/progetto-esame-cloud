@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2/promise');
 const crypto = require('crypto');
-const cors = require('cors'); // <--- AGGIUNTO
+const cors = require('cors');
 const app = express();
 
 const PORT = process.env.PORT || 3000;
