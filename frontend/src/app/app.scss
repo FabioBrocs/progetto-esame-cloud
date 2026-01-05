@@ -1,0 +1,146 @@
+// Variabili
+$primary-color: #007bff;
+$bg-color: #f4f7f6;
+$mobile-breakpoint: 600px;
+
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $bg-color;
+  padding: 20px;
+
+  .card {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px; // Su PC è una card, su mobile prende quasi tutto lo schermo
+
+    h2 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+      
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: bold;
+      }
+
+      input {
+        width: 100%;
+        padding: 12px; // Padding ampio per facilitare il tocco su mobile
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box; // Importante per il responsive
+      }
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+
+      &:disabled {
+        background-color: #ccc;
+      }
+
+      &:hover:not(:disabled) {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+
+    .status-msg {
+      margin-top: 1rem;
+      text-align: center;
+      color: $primary-color;
+      font-weight: bold;
+    }
+  }
+}
+
+// Media Query per schermi molto piccoli
+@media (max-width: $mobile-breakpoint) {
+  .card {
+    padding: 1rem;
+    box-shadow: none; // Design più "flat" su mobile
+  }
+}
+// ... (tieni il codice precedente e aggiungi/modifica questi pezzi)
+
+.toggle-text {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+  
+  span {
+    color: $primary-color;
+    cursor: pointer;
+    font-weight: bold;
+    text-decoration: underline;
+
+    &:hover {
+      color: darken($primary-color, 15%);
+    }
+  }
+}
+
+.btn-secondary {
+  background-color: #6c757d !important;
+  margin-top: 1rem;
+  
+  &:hover {
+    background-color: #5a6268 !important;
+  }
+}
+
+.status-msg {
+  // Aggiungiamo un colore diverso se è un errore o un successo (opzionale)
+  margin-top: 1rem;
+  padding: 10px;
+  border-radius: 4px;
+  background: #e7f3ff;
+}
+
+.nota-form {
+  margin-bottom: 20px;
+  textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: none;
+    box-sizing: border-box;
+  }
+}
+
+.note-container {
+  max-height: 300px;
+  overflow-y: auto; // Scroll interno se ci sono molte note
+  margin-bottom: 20px;
+
+  .nota-card {
+    background: #fff9c4; // Un giallino stile post-it
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border-left: 5px solid #fbc02d;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+
+    p { margin: 0; color: #333; }
+    small { color: #777; font-size: 0.75rem; }
+  }
+}

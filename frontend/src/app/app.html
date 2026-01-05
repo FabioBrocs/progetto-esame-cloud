@@ -1,0 +1,50 @@
+<div class="main-container">
+  <div class="card">
+    
+    <div *ngIf="utenteLoggato">
+      <h2>Ciao, {{ utenteLoggato }}!</h2>
+      
+      <div class="nota-form">
+        <textarea [(ngModel)]="nuovaNotaTesto" placeholder="Scrivi una nota..."></textarea>
+        <button (click)="inviaNota()">Salva Nota</button>
+      </div>
+
+      <div class="note-container">
+        <div class="nota-card" *ngFor="let nota of listaNote">
+          <p>{{ nota.contenuto }}</p>
+          <small>{{ nota.data_creazione | date:'dd/MM/yyyy HH:mm' }}</small>
+        </div>
+        <p *ngIf="listaNote.length === 0">Non hai ancora salvato nessuna nota.</p>
+      </div>
+
+      <button (click)="logout()" class="btn-secondary">Logout</button>
+    </div>
+
+    <div *ngIf="!utenteLoggato">
+      <h2>{{ isLoginMode ? 'Accedi' : 'Registrati' }}</h2>
+      
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label>Username</label>
+          <input type="text" name="username" [(ngModel)]="datiForm.username" required>
+        </div>
+
+        <div class="form-group">
+          <label>Password</label>
+          <input type="password" name="password" [(ngModel)]="datiForm.password" required>
+        </div>
+
+        <button type="submit" [disabled]="!datiForm.username || !datiForm.password">
+          {{ isLoginMode ? 'Login' : 'Crea Account' }}
+        </button>
+      </form>
+
+      <p class="toggle-text">
+        {{ isLoginMode ? "Non hai un account?" : "Hai già un account?" }}
+        <span (click)="toggleMode()">{{ isLoginMode ? 'Registrati' : 'Accedi' }}</span>
+      </p>
+    </div>
+
+    <p class="status-msg" *ngIf="messaggioEsito">{{ messaggioEsito }}</p>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "db-esame-fabio.mysql.database.azure.com",
+    "secure": false
+  }
+}
