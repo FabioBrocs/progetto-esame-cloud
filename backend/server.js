@@ -2,9 +2,13 @@ require('dotenv').config();
 const express = require('express');
 const mysql = require('mysql2/promise');
 const crypto = require('crypto');
+const cors = require('cors'); // <--- AGGIUNTO
 const app = express();
 
 const PORT = process.env.PORT || 3000;
+
+// Middleware CORS: permette al frontend (Vercel) di chiamare questo server
+app.use(cors()); 
 
 // Middleware per leggere JSON
 app.use(express.json());
@@ -16,9 +20,8 @@ const dbConfig = {
     password: process.env.DB_PASS,
     database: process.env.DB_NAME,
     port: 3306,
-    // Questa è la parte fondamentale per risolvere l'errore:
     ssl: {
-        rejectUnauthorized: false // Permette la connessione sicura ad Azure
+        rejectUnauthorized: false 
     }
 };
 
@@ -49,7 +52,6 @@ function creaHash(password, salt) {
 
 // --- ROTTE API ---
 
-// Registrazione
 app.post('/api/registrazione', async (req, res) => {
     const { username, password } = req.body;
     if (!username || !password) return res.status(400).json({ errore: "Dati mancanti" });
@@ -70,7 +72,6 @@ app.post('/api/registrazione', async (req, res) => {
     }
 });
 
-// Login
 app.post('/api/login', async (req, res) => {
     const { username, password } = req.body;
     try {
@@ -96,7 +97,6 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
-// Recupero Note
 app.get('/api/note/:utenteId', async (req, res) => {
     try {
         const query = "SELECT * FROM note WHERE utente_id = ? ORDER BY data_creazione DESC";
@@ -107,7 +107,6 @@ app.get('/api/note/:utenteId', async (req, res) => {
     }
 });
 
-// Aggiunta Nota
 app.post('/api/note', async (req, res) => {
     const { utenteId, contenuto } = req.body;
     if (!contenuto) return res.status(400).json({ errore: "Nota vuota" });
@@ -122,5 +121,5 @@ app.post('/api/note', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`Server in ascolto su http://localhost:${PORT}`);
+    console.log(`Server in ascolto su porta ${PORT}`);
 });
