@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'db-esame-fabio.mysql.database.azure.com'
+  apiUrl: 'https://api-esame-fabio-bbd9ecafgzfefnhy.italynorth-01.azurewebsites.net/'
 };
