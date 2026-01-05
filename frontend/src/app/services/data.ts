@@ -1,19 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { lastValueFrom } from 'rxjs';
-import { environment } from '../../environments/environment'; // 1. IMPORTA L'ENVIRONMENT
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class Data {
-  // 2. CREA UNA VARIABILE PER L'URL BASE
-  //private apiUrl = environment.apiUrl;
-  // FORZA URL
-  private apiUrl = 'https://api-esame-fabio-bbd9ecafgzfefnhy.italynorth-01.azurewebsites.net';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
   async registraUtente(dati: any) {
-    // 3. USA IL BACKTICK ` PER UNIRE L'URL ALLA ROTTA
     const chiamata = this.http.post<any>(`${this.apiUrl}/api/registrazione`, dati);
     return await lastValueFrom(chiamata);
   }

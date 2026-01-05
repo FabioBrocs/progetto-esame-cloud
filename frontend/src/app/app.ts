@@ -11,10 +11,8 @@ import { Data } from './services/data';
   styleUrls: ['./app.scss']
 })
 export class App {
-  // Stato dell'interfaccia
-  isLoginMode = true; // Iniziamo mostrando il login
+  isLoginMode = true;
 
-  // Dati per i form
   datiForm = { username: '', password: '' };
 
   idUtenteLoggato: number | null = null;
@@ -40,7 +38,6 @@ export class App {
     
     try {
         if (this.isLoginMode) {
-            // --- LOGICA LOGIN ---
             const res = await this.data.login(this.datiForm);        
             this.utenteLoggato = res.utente;
             this.idUtenteLoggato = res.idUtente; 
@@ -48,7 +45,6 @@ export class App {
             await this.caricaNote();
         } 
         else { 
-            // --- LOGICA REGISTRAZIONE (ORA DENTRO ELSE) ---
             await this.data.registraUtente(this.datiForm);
             this.messaggioEsito = "Registrazione riuscita! Inserisci di nuovo la password per accedere.";
             
@@ -79,10 +75,10 @@ export class App {
     try {
         const res = await this.data.aggiungiNota(this.idUtenteLoggato, this.nuovaNotaTesto);
         
-        this.nuovaNotaTesto = ''; // Svuota input
+        this.nuovaNotaTesto = '';
         this.messaggioEsito = "Nota salvata con successo!";
         
-        await this.caricaNote(); // Aggiorna la lista
+        await this.caricaNote();
         this.cdr.detectChanges();
     } catch (error: any) {
         console.error("Errore durante l'invio della nota:", error);
