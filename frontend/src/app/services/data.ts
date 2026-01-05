@@ -28,4 +28,10 @@ export class Data {
     const chiamata = this.http.post<any>(`${this.apiUrl}/api/note`, { utenteId, contenuto });
     return await lastValueFrom(chiamata);
   }
+
+  async cancellaNota(notaId: number) {
+    const chiamata = this.http.delete<any>(`${this.apiUrl}/api/note/${notaId}`);
+    return await lastValueFrom(chiamata);
+}
+
 }

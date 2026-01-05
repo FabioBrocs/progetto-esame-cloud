@@ -67,22 +67,44 @@ export class App {
   }
 
   async inviaNota() {
-    if (!this.idUtenteLoggato || !this.nuovaNotaTesto) {
-        console.warn("Dati mancanti per l'invio!");
+    
+    if (!this.idUtenteLoggato) {
+        console.error("Errore: ID utente mancante!");
+        return;
+    }
+    
+    if (!this.nuovaNotaTesto) {
+        console.warn("Nota vuota, invio annullato.");
         return;
     }
 
     try {
         const res = await this.data.aggiungiNota(this.idUtenteLoggato, this.nuovaNotaTesto);
-        
-        this.nuovaNotaTesto = '';
+
+        this.nuovaNotaTesto = ''; 
         this.messaggioEsito = "Nota salvata con successo!";
         
-        await this.caricaNote();
-        this.cdr.detectChanges();
+        await this.caricaNote(); 
+        
     } catch (error: any) {
         console.error("Errore durante l'invio della nota:", error);
         this.messaggioEsito = "Errore nel salvataggio della nota.";
+    } finally {
+        this.cdr.detectChanges();
+    }
+}
+
+async rimuoviNota(notaId: number) {
+    if (!confirm("Sei sicuro di voler eliminare questa nota?")) return;
+
+    try {
+        await this.data.cancellaNota(notaId);
+        this.messaggioEsito = "Nota eliminata.";
+        await this.caricaNote();
+    } catch (error) {
+        console.error("Errore durante l'eliminazione:", error);
+        this.messaggioEsito = "Impossibile eliminare la nota.";
+    } finally {
         this.cdr.detectChanges();
     }
 }

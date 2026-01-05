@@ -120,6 +120,18 @@ app.post('/api/note', async (req, res) => {
     }
 });
 
+app.delete('/api/note/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const query = "DELETE FROM note WHERE id = ?";
+        await db.execute(query, [id]);
+        res.json({ messaggio: "Nota eliminata con successo!" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ errore: "Errore durante l'eliminazione della nota" });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server in ascolto su porta ${PORT}`);
 });

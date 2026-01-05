@@ -10,11 +10,14 @@
       </div>
 
       <div class="note-container">
-        <div class="nota-card" *ngFor="let nota of listaNote">
+        <div *ngFor="let nota of listaNote" class="nota-card">
           <p>{{ nota.contenuto }}</p>
-          <small>{{ nota.data_creazione | date:'dd/MM/yyyy HH:mm' }}</small>
+          <small>{{ nota.data_creazione | date:'short' }}</small>
+          
+          <button (click)="rimuoviNota(nota.id)" class="btn-delete">
+            Elimina
+          </button>
         </div>
-        <p *ngIf="listaNote.length === 0">Non hai ancora salvato nessuna nota.</p>
       </div>
 
       <button (click)="logout()" class="btn-secondary">Logout</button>
