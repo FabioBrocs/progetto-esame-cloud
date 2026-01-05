@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment'; // 1. IMPORTA L'EN
 @Injectable({ providedIn: 'root' })
 export class Data {
   // 2. CREA UNA VARIABILE PER L'URL BASE
-  private apiUrl = environment.baseUrl;
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
